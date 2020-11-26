@@ -14,25 +14,23 @@ namespace EhiSampleApp.Controllers
     [ApiController]
     public class ContactsController : ControllerBase
     {
-        private readonly EhiSampleAppContext _context;
-
-        public ContactsController(EhiSampleAppContext context)
+        private readonly IDbOperaions _dbOperaions;
+        public ContactsController( IDbOperaions dbOperaions)
         {
-            _context = context;
+            _dbOperaions = dbOperaions;
         }
-
         // GET: api/Contacts
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Contact>>> GetContact()
         {
-            return await _context.Contact.ToListAsync();
+            return await _dbOperaions.GetContact().ToListAsync();
         }
 
         // GET: api/Contacts/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Contact>> GetContact(int id)
         {
-            var contact = await _context.Contact.FindAsync(id);
+            var contact = await _dbOperaions.GetContact(id);
 
             if (contact == null)
             {
@@ -53,15 +51,15 @@ namespace EhiSampleApp.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(contact).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                 await _dbOperaions.PutContact(id, contact);
+
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ContactExists(id))
+                if (string.IsNullOrEmpty(_dbOperaions.GetContact(id).Result.ToString()))
                 {
                     return NotFound();
                 }
@@ -80,31 +78,24 @@ namespace EhiSampleApp.Controllers
         [HttpPost]
         public async Task<ActionResult<Contact>> PostContact(Contact contact)
         {
-            _context.Contact.Add(contact);
-            await _context.SaveChangesAsync();
+            await _dbOperaions.PostContact( contact);
 
             return CreatedAtAction("GetContact", new { id = contact.Id }, contact);
         }
 
         // DELETE: api/Contacts/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Contact>> DeleteContact(int id)
+        public async Task<ActionResult> DeleteContact(int id)
         {
-            var contact = await _context.Contact.FindAsync(id);
-            if (contact == null)
-            {
-                return NotFound();
-            }
-            contact.Status = "In Active";
-            _context.Entry(contact).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbOperaions.DeleteContact(id);
+
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ContactExists(id))
+                if (string.IsNullOrEmpty(_dbOperaions.GetContact(id).Result.ToString()))
                 {
                     return NotFound();
                 }
@@ -114,12 +105,9 @@ namespace EhiSampleApp.Controllers
                 }
             }
 
-            return contact;
+            return NoContent();
         }
 
-        private bool ContactExists(int id)
-        {
-            return _context.Contact.Any(e => e.Id == id);
-        }
+        
     }
 }

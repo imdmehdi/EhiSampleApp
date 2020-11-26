@@ -23,7 +23,7 @@ namespace EhiSampleApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            
+            services.AddScoped<IDbOperaions, DbOperaions>();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
