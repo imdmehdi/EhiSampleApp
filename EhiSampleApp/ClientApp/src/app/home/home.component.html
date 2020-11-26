@@ -1,7 +1,6 @@
-<h1>Hello, world!</h1>
-<p>Welcome to your new single-page application, built with:</p>
+
 <div class="jumbtron">
-  <h1 class="display-4 text-center">Customer Detail Register</h1>
+  <h3 class="display-4 text-center">Customer Detail Register</h3>
 
   <div class="row">
     <div class="col-md-5">
@@ -11,4 +10,27 @@
       <div>table with list of records from the table</div>
     </div>-->
   </div>
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>PhoneNumber</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tr *ngFor="let pd of service.list">
+      <td (click)="populateForm(pd)">{{pd.id}}</td>
+      <td (click)="populateForm(pd)">{{pd.firstName}}</td>
+      <td (click)="populateForm(pd)">{{pd.lastName}}</td>
+      <td (click)="populateForm(pd)">{{pd.email}}</td>
+      <td (click)="populateForm(pd)">{{pd.phoneNumber}}</td>
+      <td (click)="populateForm(pd)">{{pd.status}}</td>
+      <td>
+        <i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(pd.id)"></i>
+      </td>
+    </tr>
+  </table>
 </div>

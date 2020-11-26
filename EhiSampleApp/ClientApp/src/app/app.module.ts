@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { CustomerDetailFormComponent } from './home/customer-detail-form/customer-detail-form.component';
 
 @NgModule({
@@ -15,7 +14,6 @@ import { CustomerDetailFormComponent } from './home/customer-detail-form/custome
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    FetchDataComponent,
     CustomerDetailFormComponent
   ],
   imports: [
@@ -23,8 +21,8 @@ import { CustomerDetailFormComponent } from './home/customer-detail-form/custome
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: '', component: HomeComponent, pathMatch: 'full' }
+     
     ])
   ],
   providers: [],

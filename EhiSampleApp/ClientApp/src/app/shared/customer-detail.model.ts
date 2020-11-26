@@ -1,8 +1,8 @@
 export class CustomerDetail {
-  Id: number;
-  FirstName: string;
-  LastName: string;
-  Email: string;
-  PhoneNumber: string;
-  Status: string;
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  status: string;
 }

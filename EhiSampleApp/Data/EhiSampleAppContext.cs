@@ -23,4 +23,5 @@ namespace EhiSampleApp.Data
 
         public DbSet<EhiSampleApp.Model.Contact> Contact { get; set; }
     }
+
 }

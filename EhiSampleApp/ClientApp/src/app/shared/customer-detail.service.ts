@@ -16,9 +16,9 @@ export class CustomerDetailService {
     return this.http.post(`${this.rootURL}api/Contacts`, this.formData);
   }
   putCustomerDetail() {
-    return this.http.put(`${this.rootURL}api/Contacts/${this.formData.Id}`, this.formData);
+    return this.http.put(`${this.rootURL}api/Contacts/${this.formData.id}`, this.formData);
   }
-  deleteDeleteDetail(id) {
+  deleteCustomerDetail(id) {
     return this.http.delete(`${this.rootURL}api/Contacts/${id}`);
   }
 

@@ -18,17 +18,20 @@ export class CustomerDetailFormComponent implements OnInit {
     if (form != null)
       form.form.reset();
     this.service.formData = {
-      Id: 0,
-      FirstName: '',
-      LastName: '',
-      Email: '',
-      PhoneNumber: '',
-      Status: '',
+      id: 0,
+      firstName: '',
+      lastName: '',
+      email: '',
+      phoneNumber: '',
+      status: '',
       
     }
   }
   onSubmit(form: NgForm) {
-    this.insertRecord(form);
+    if (this.service.formData.id == 0)
+      this.insertRecord(form);
+    else
+      this.updateRecord(form);
   }
 
   insertRecord(form: NgForm) {
@@ -40,4 +43,16 @@ export class CustomerDetailFormComponent implements OnInit {
       err => { console.log(err); }
     )
   }
+  updateRecord(form: NgForm) {
+    this.service.putCustomerDetail().subscribe(
+      res => {
+        this.resetForm(form);
+        this.service.refreshList();
+      },
+      err => {
+        console.log(err);
+      }
+    )
+  }
+
 }

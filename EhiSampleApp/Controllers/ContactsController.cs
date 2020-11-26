@@ -95,9 +95,24 @@ namespace EhiSampleApp.Controllers
             {
                 return NotFound();
             }
+            contact.Status = "In Active";
+            _context.Entry(contact).State = EntityState.Modified;
 
-            _context.Contact.Remove(contact);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ContactExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return contact;
         }
